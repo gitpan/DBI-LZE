@@ -1,0 +1,28 @@
+---
+name: DBI-LZE
+version: 0.24
+author:
+  - 'Dirk Lindner <lindnerei@o2online.de>'
+abstract: A simple DBI subclass
+license: lgpl
+resources:
+  license: http://opensource.org/licenses/artistic-license.php
+requires:
+  DBI: 1.5
+  Module::Build: 0.2808
+  Test::More: 0.7
+  Test::Pod: 1.26
+  Test::Pod::Coverage: 0.55
+  Test::Signature: 1.1
+provides:
+  DBI::LZE:
+    file: lib/DBI/LZE.pm
+    version: 0.24
+  DBI::LZE::db:
+    file: lib/DBI/LZE.pm
+  DBI::LZE::st:
+    file: lib/DBI/LZE.pm
+generated_by: Module::Build version 0.2808
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.2.html
+  version: 1.2
