@@ -4,7 +4,7 @@ use lib qw(lib);
 use DBI::LZE;
 use vars qw($db $user $host $password);
 do('t/config.pl');
-my $database = new DBI::LZE({name => $db, host => $host, user => $user, password => $password,});
+my ($database, $dbh) = new DBI::LZE({name => $db, host => $host, user => $user, password => $password,});
 use Test::More tests => 2;
 my %execute2 = (title => 'truncateQuerys', description => 'description', sql => "truncate querys", return => "void",);
 my %execute3 = (title => 'showTables',     description => 'description', sql => "show tables",     return => "fetch_array",);

@@ -1,4 +1,4 @@
-DBI::LZE version 0.24
+DBI::LZE version 0.25
 ======================
 
 The README is used to introduce the module and provide instructions on
@@ -27,7 +27,6 @@ DEPENDENCIES
 This module requires these other modules and libraries:
 'DBI' => 1.50,
 'Test::More' => 0.7,
-'Test::Signature' => 1.10,
 'Module::Build' => 0.2808,
 'Test::Pod' =>  1.26,
 'Test::Pod::Coverage' =>  0.55,

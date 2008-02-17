@@ -1,6 +1,6 @@
 ---
 name: DBI-LZE
-version: 0.24
+version: 0.25
 author:
   - 'Dirk Lindner <lindnerei@o2online.de>'
 abstract: A simple DBI subclass
@@ -13,11 +13,10 @@ requires:
   Test::More: 0.7
   Test::Pod: 1.26
   Test::Pod::Coverage: 0.55
-  Test::Signature: 1.1
 provides:
   DBI::LZE:
     file: lib/DBI/LZE.pm
-    version: 0.24
+    version: 0.25
   DBI::LZE::db:
     file: lib/DBI/LZE.pm
   DBI::LZE::st:

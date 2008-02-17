@@ -2,7 +2,7 @@ package DBI::LZE;
 
 # use strict;
 # use warnings;
-no warnings 'redefine';
+# no warnings 'redefine';
 use vars qw( $dbh $dsn $DefaultClass $settings  @EXPORT_OK @ISA %functions $style $right $tbl);
 $DefaultClass = 'DBI::LZE' unless defined $DBI::LZE::DefaultClass;
 @DBI::LZE::EXPORT_OK = qw( useexecute quote void fetch_hashref fetch_AoH fetch_array updateModules deleteexecute editexecute addexecute tableLength tableExists initDB $dsn $dbh selectTable);
@@ -11,13 +11,15 @@ $DefaultClass = 'DBI::LZE' unless defined $DBI::LZE::DefaultClass;
                           'dynamic'     => [qw( useexecute void fetch_hashref fetch_AoH fetch_array updateModules deleteexecute editexecute addexecute selectTable)],
                           'independent' => [qw(tableLength tableExists initDB useexecute void fetch_hashref fetch_AoH fetch_array updateModules deleteexecute editexecute addexecute selectTable)],
 );
-$DBI::LZE::VERSION = '0.24';
+$DBI::LZE::VERSION = '0.25';
 $tbl               = 'querys';
 require Exporter;
 use DBI;
-@DBI::LZE::ISA = qw( Exporter DBI);
 
-# use base qw/DBI/;
+# @DBI::LZE::ISA = qw( Exporter DBI);
+
+use base qw/Exporter DBI/;
+
 # use Exporter qw/import/;
 
 =head1 NAME
@@ -38,43 +40,44 @@ OO Syntax
 
 use DBI::LZE;
 
-my $database = new DBI::LZE(
+        my $database = new DBI::LZE(
 
-{
+                {
 
-name =>'LZE',
+                name =>'LZE',
 
-host => 'localhost',
+                host => 'localhost',
 
-user => 'root',
+                user => 'root',
 
-password =>'',
+                password =>'',
 
-style=> 'Crystal'
+                style=> 'Crystal'
 
-}
+                }
 
-);
+        );
 
-my %execute  = (
+        my %execute  = (
 
-title => 'showTables',
+                title => 'showTables',
 
-description => 'description',
+                description => 'description',
 
-sql => "show tables",
+                sql => "show tables",
 
-return => "fetch_array",
+                return => "fetch_array",
 
-);
+        );
 
-$database->addexecute(\%execute);
+        $database->addexecute(\%execute);
 
-$database->showTables();
+        $database->showTables();
 
 =head2 Export Tags
 
-:all execute useexecute quote void fetch_hashref fetch_AoH fetch_array updateModules deleteexecute editexecute       addexecute tableLength tableExists initDB
+:all 
+        execute useexecute quote void fetch_hashref fetch_AoH fetch_array updateModules deleteexecute editexecute       addexecute tableLength tableExists initDB
 
 :dynamic execute useexecute void fetch_hashref fetch_AoH fetch_array updateModules deleteexecute editexecute addexecute
 
@@ -82,31 +85,62 @@ independent: tableLength tableExists initDB :dynamic
 
 =head1 DESCRIPTION
 
-DBI::LZE
+DBI::LZE is a DBI subclass providing a SQL Libary.
 
-=head1 BUGS & LIMITATIONS
+This Module is mainly written for CGI::LZE::Blog,
 
-you can`t use the dynamic statements under mod_perl.
+but there is no reason to use it not standalone.
+
 
 =head2 new()
 
-my $database = new DBI::LZE(optional \%initializer);
+        my $database = new DBI::LZE();
 
-see initDB()
+        if y
+        my ($database,$dbh) = new DBI::LZE(
+
+                                        {
+
+                                        name => $db,
+
+                                        host => $host,
+
+                                        user => $user,
+
+                                        password => $password,
+
+                                        }
+
+        );
 
 =cut
 
 sub new {
         my ($class, @initializer) = @_;
         my $self = {};
+        my $dbh;
         bless $self, ref $class || $class || $DefaultClass;
-        $self->initDB(@initializer) if(@initializer);
+        $dbh = $self->initDB(@initializer) if(@initializer);
+        return ($self, $dbh) if $dbh;
         return $self;
 }
 
 =head2 initDB()
 
-my $dbh = initDB({name => 'LZE',host => 'localhost',user => 'root',password =>'',style=> 'Crystal'});
+        my $dbh = initDB(
+
+                {
+
+                name => 'LZE',
+
+                host => 'localhost',
+
+                user => 'root',
+
+                password =>'',
+
+                }
+        );
 
 =cut
 
@@ -259,13 +293,13 @@ example:
 
         my %execute = (
 
-        title => 'joins',
+                title => 'joins',
 
-        description => 'description',
+                description => 'description',
 
-        sql => 'select * from table_1 JOIN  table_2 ',
+                sql => 'select * from table_1 JOIN  table_2 ',
 
-        return => "fetch_hashref"
+                return => "fetch_hashref"
 
         );
 
@@ -313,7 +347,7 @@ sub deleteexecute {
 
 =head2 fetch_array()
 
-@AoA = $database->fetch_array($sql);
+        @A = $database->fetch_array($sql);
 
 =cut
 
