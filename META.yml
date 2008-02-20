@@ -1,6 +1,6 @@
 ---
 name: DBI-LZE
-version: 0.25
+version: 0.26
 author:
   - 'Dirk Lindner <lindnerei@o2online.de>'
 abstract: A simple DBI subclass
@@ -8,15 +8,15 @@ license: lgpl
 resources:
   license: http://opensource.org/licenses/artistic-license.php
 requires:
-  DBI: 1.5
-  Module::Build: 0.2808
-  Test::More: 0.7
-  Test::Pod: 1.26
-  Test::Pod::Coverage: 0.55
+  DBI: '>=1.50'
+  Module::Build: '>=0.2808'
+  Test::More: '>=0.7'
+  Test::Pod: '>=1.26'
+  Test::Pod::Coverage: '>=0.55'
 provides:
   DBI::LZE:
     file: lib/DBI/LZE.pm
-    version: 0.25
+    version: 0.26
   DBI::LZE::db:
     file: lib/DBI/LZE.pm
   DBI::LZE::st:

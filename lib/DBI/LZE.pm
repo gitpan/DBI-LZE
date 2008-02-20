@@ -1,8 +1,6 @@
 package DBI::LZE;
-
-# use strict;
-# use warnings;
-# no warnings 'redefine';
+use strict;
+use warnings;
 use vars qw( $dbh $dsn $DefaultClass $settings  @EXPORT_OK @ISA %functions $style $right $tbl);
 $DefaultClass = 'DBI::LZE' unless defined $DBI::LZE::DefaultClass;
 @DBI::LZE::EXPORT_OK = qw( useexecute quote void fetch_hashref fetch_AoH fetch_array updateModules deleteexecute editexecute addexecute tableLength tableExists initDB $dsn $dbh selectTable);
@@ -11,7 +9,7 @@ $DefaultClass = 'DBI::LZE' unless defined $DBI::LZE::DefaultClass;
                           'dynamic'     => [qw( useexecute void fetch_hashref fetch_AoH fetch_array updateModules deleteexecute editexecute addexecute selectTable)],
                           'independent' => [qw(tableLength tableExists initDB useexecute void fetch_hashref fetch_AoH fetch_array updateModules deleteexecute editexecute addexecute selectTable)],
 );
-$DBI::LZE::VERSION = '0.25';
+$DBI::LZE::VERSION = '0.26';
 $tbl               = 'querys';
 require Exporter;
 use DBI;
@@ -90,6 +88,10 @@ DBI::LZE is a DBI subclass providing a SQL Libary.
 This Module is mainly written for CGI::LZE::Blog,
 
 but there is no reason to use it not standalone.
+
+Also it is much more easier
+
+to update, test and distribute the parts standalone.
 
 
 =head2 new()

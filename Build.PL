@@ -3,7 +3,6 @@ use Module::Build;
 use vars qw( $settings $skip);
 my $class = Module::Build->subclass(class => "Module::Build::Custom", code => <<'END');
 use lib("lib");
-use DBI::LZE;
 sub ACTION_build {
         my $self = shift;
         open OUT, ">t/config.pl" or die $!;
@@ -16,6 +15,7 @@ sub ACTION_install {
         my $self = shift;
         my %conf = (name => $self->{'properties'}{dbname}, host => $self->{'properties'}{sqlhost}, user => $self->{'properties'}{dbuser},);
         $conf{password} = $self->{'properties'}{dbpass} unless $self->{'properties'}{dbpass} =~ /^$/;
+        use DBI::LZE;
         my ($database,$dbH) = new DBI::LZE(\%conf);
         $database->void(
                 q/CREATE TABLE IF NOT EXISTS querys (
@@ -33,10 +33,10 @@ PRIMARY KEY  (id)
 sub ACTION_uninstall {
         my $self = shift;
         my %conf = (name => $self->{'properties'}{dbname}, host => $self->{'properties'}{sqlhost}, user => $self->{'properties'}{dbuser},);
+        use DBI::LZE;
         my ($database,$dbH) = new DBI::LZE(\%conf);
         $conf{password} = $self->{'properties'}{dbpass} unless $self->{'properties'}{dbpass} =~ /^$/;
         $database->void(" DROP TABLE `querys`");
-        $self->SUPER::ACTION_uninstall;
 }
 
 sub ACTION_realclean {
@@ -60,12 +60,11 @@ END
 my $inctance = $class->new(
         get_options => {skip => {store => \$skip},},
         module_name => 'DBI::LZE',
-        requires => {'DBI' => 1.50, 'Test::More' => 0.7, 'Module::Build' => 0.2808, 'Test::Pod' => 1.26, 'Test::Pod::Coverage' => 0.55,},
+        requires => {'DBI' => ">=1.50", 'Test::More' => ">=0.7", 'Module::Build' => ">=0.2808", 'Test::Pod' => ">=1.26", 'Test::Pod::Coverage' => ">=0.55",},
         ($] >= 5.005 ? (AUTHOR => 'Dirk Lindner <lindnerei@o2online.de>') : ()),
         dist_abstract      => "A simple DBI subclass",
         license            => "lgpl",
         create_makefile_pl => 'passthrough',
-        #sign               => 1,
 );
 eval 'use CGI::LZE::Settings qw($settings loadSettings saveSettings)';
 unless ($@) {
@@ -93,5 +92,5 @@ $inctance->create_build_script;
 print "
 run ./Build && sudo ./Build install && ./Build testdb && ./Build realclean
 Don`t forgot do run realclean after testing,
-setup will save settings as cleantext
+setup will save settings as plaintext
 ";
